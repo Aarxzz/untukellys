@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warkah Memoir Ellys</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #fdfbf9;
+            --text-color: #4a4238;
+            --accent-color: #8c7851;
+            --border-color: #e8e2da;
+            --white: #ffffff;
+            --soft-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            --hover-shadow: 0 20px 40px rgba(140, 120, 81, 0.12);
+            --transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Playfair Display', serif;
+            line-height: 2.0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            background: radial-gradient(circle at center, #ffffff 0%, var(--bg-color) 100%);
+        }
+
+        .cursive-title {
+            font-family: 'Italianno', cursive;
+            font-size: clamp(4rem, 12vw, 8rem);
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            font-weight: 400;
+            /* Adjusted to -0.01em for natural connection without crowding */
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+        }
+
+        .sub-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.8em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            color: var(--text-color);
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .memoir-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 120px;
+            position: relative;
+        }
+
+        .text-body {
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+            margin-bottom: 60px;
+            transition: var(--transition);
+        }
+
+        .text-body p {
+            font-size: 1.15rem;
+            color: var(--text-color);
+            opacity: 0.7;
+            transition: var(--transition);
+            white-space: pre-line;
+        }
+
+        .text-body:hover p {
+            opacity: 1;
+        }
+
+        .text-body p.highlight {
+            font-style: italic;
+            color: var(--accent-color);
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        .media-grid {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .polaroid {
+            background: var(--white);
+            padding: 10px 10px 35px 10px;
+            box-shadow: var(--soft-shadow);
+            border: 1px solid var(--border-color);
+            transform: rotate(var(--rot));
+            transition: var(--transition);
+            cursor: pointer;
+            width: 180px;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.08);
+            z-index: 10;
+            box-shadow: var(--hover-shadow);
+        }
+
+        .polaroid-img-box {
+            aspect-ratio: 1/1;
+            background: #f9f7f5;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(253, 251, 249, 0.98);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        #modal-content {
+            max-width: 95%;
+            max-height: 85vh;
+            object-fit: contain;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.1);
+        }
+
+        #modal-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 35px;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: 0.3s;
+        }
+
+        footer {
+            padding: 120px 20px;
+            text-align: center;
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-cursive {
+            font-family: 'Italianno', cursive;
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.6em;
+            text-transform: uppercase;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .polaroid { width: 140px; }
+            .cursive-title { letter-spacing: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="cursive-title">Kota Ini Tak Sama Tanpamu</h1>
+        <p class="sub-title">Sebuah Memoir Digital • Untuk Ellys</p>
+    </header>
+
+    <div class="container" id="memoir-container">
+        <!-- Content injected via JS -->
+    </div>
+
+    <footer>
+        <div class="footer-cursive">Awaklah kota saya.</div>
+        <div class="footer-meta">Digital Memoir • 77 Kenangan • 2024-2026</div>
+    </footer>
+
+    <div id="modal">
+        <span id="modal-close">&times;</span>
+        <div id="modal-inner"></div>
+    </div>
+
+    <script>
+        const totalPolaroids = 77;
+        
+        const fullContent = [
+            { text: "Hi Ellys,", highlight: true },
+            { text: "Saya tak pasti apa yang awak akan rasa bila nampak ini.\nMungkin pelik. Mungkin tak selesa. Mungkin biasa sahaja." },
+            { text: "Apa pun reaksi awak, saya faham." },
+            { text: "Sudah hampir dua tahun kita tak bercakap dengan betul. Dalam tempoh itu, hidup masing-masing berjalan. Masa ubah banyak benda. Saya pun berubah.\nAwk pun tentu berubah." },
+            { text: "Tapi ada satu perkara yang saya tak pernah benar-benar akui secara jelas;\nsaya tak pernah betul-betul lepaskan awak dari hati saya.\nSaya tak hubungi awak.\nSaya tak ganggu awak.\nSaya tak cuba muncul dalam hidup awak semula.\nBukan sebab saya tak peduli.\nTapi sebab saya hormat keputusan awak.\nSaya mengaku tu. mungkin saya bodoh buat semua ni, tapi tak apalah." },
+            { text: "tapi saya kenal awak. Bila awak buat keputusan, awk dah kekal dengan keputusan tu, itu yang saya belajar. dan walaupun amik masa tapi saya akhirnya mengalah dan hormati menda tu." },
+            { text: "Saya teruskan hidup saya.\nAlhamdulillah, banyak perkara yang dulu saya impikan — yang pernah saya cerita pada awak — Allah izinkan jadi nyata. Saya bersyukur.\nCuma setiap kali sesuatu tercapai, ada satu lintasan kecil dalam hati saya:\n“Kalaulah dia tahu.”", specialCount: 2 },
+            { text: "Bukan untuk tunjuk apa-apa.\nBukan untuk buat awak rasa apa-apa.\nCuma kerana suatu masa dulu, awak adalah orang yang saya bayangkan ada bila semua itu berlaku.\ndan sebab awaklah, langkah saya sempurna.\nsaya tenang lalui hari-hari tahu saya akan balik ke pangkuan awk dahulu." },
+            { text: "Saya juga nak jujur tentang satu perkara.\nsaya simpan gambar-gambar awak selama ini;\nBukan untuk apa-apa yang tak baik.\nBukan untuk hidup dalam masa lalu.\nCuma saya belum bersedia untuk lepaskan semuanya begitu sahaja." },
+            { text: "Kalau itu buat awak rasa tidak selesa, saya benar-benar minta maaf. Itu bukan niat saya untuk melanggar batas awak. Selepas website ini siap, saya sudah padam semuanya dari gallery saya. Saya tak simpan apa-apa lagi selain apa yang ada di sini sebagai penutup." },
+            { text: "Website ini bukan untuk memujuk.\nBukan untuk membuka luka lama.\nIa cuma ruang terakhir untuk saya susun apa yang selama ini saya simpan dalam diam." },
+            { text: "Gambar-gambar ni bukan sekadar gambar bagi saya.\nSetiap satunya ada cerita kecil yang mungkin hanya kita berdua faham." },
+            { text: "Saya tak sempurna dulu.\ntak sempurna sekarang.\nSaya terlalu keras.\nSaya ego.\nSaya menyesal.\nSaya terlalu yakin dengan cara saya sendiri sampai saya tak cukup lembut menjaga hati awak." },
+            { text: "Saya tak nafikan kesilapan itu. Dan saya belajar daripadanya." },
+            { text: "Saya cuba kenal orang lain.\nSaya cuba buka hati." },
+            { text: "Tapi akhirnya saya sedar sesuatu yang jujur; hati saya tak pernah benar- benar berpindah.\nMungkin itu kelemahan.\nMungkin itu kesetiaan.\nSaya sendiri tak pasti.\nSaya cuma tahu saya tak pernah gantikan tempat awak.\ndengan secara tak sengaja saya jaga hati saya untuk awk." },
+            { text: "Kalau selepas melihat semua ini awak tetap rasa tiada apa-apa, saya terima. Saya tak akan ganggu lagi selepas ini.\nTapi kalau dalam hati awak pernah terlintas walau sekali,\n“Sanggup ke dia buat itu ini untuk aku?”" },
+            { text: "ya.\nkalau dalam apa-apa sekalipun, kalau saya mampu;\nSaya sanggup.\nSaya akan.\nWalaupun dalam diam.\nuntuk awk." },
+            { text: "Selepas ini, saya benar-benar undur diri.\nTanpa mesej lain.\nTerima kasih sebab pernah jadi seseorang yang sangat bermakna dalam hidup saya.", highlight: true },
+            { text: "Awaklah kota saya.", highlight: true, specialCount: 1 }
+        ];
+
+        const container = document.getElementById('memoir-container');
+        const modal = document.getElementById('modal');
+        const modalInner = document.getElementById('modal-inner');
+        const modalClose = document.getElementById('modal-close');
+
+        const fixedCount = 3; 
+        const remainingPolaroids = totalPolaroids - fixedCount; 
+        const normalSections = fullContent.filter(item => !item.specialCount).length; 
+        const basePerSection = Math.floor(remainingPolaroids / normalSections);
+        const remainder = remainingPolaroids % normalSections;
+
+        let photoCounter = 1; 
+        let normalSectionIndex = 0;
+
+        fullContent.forEach((item, index) => {
+            const section = document.createElement('div');
+            section.className = 'memoir-section';
+
+            const textBody = document.createElement('div');
+            textBody.className = 'text-body';
+            const p = document.createElement('p');
+            if (item.highlight) p.className = 'highlight';
+            p.textContent = item.text;
+            textBody.appendChild(p);
+            section.appendChild(textBody);
+
+            const grid = document.createElement('div');
+            grid.className = 'media-grid';
+            
+            let countForThisSection;
+            if (item.specialCount !== undefined) {
+                countForThisSection = item.specialCount;
+            } else {
+                countForThisSection = basePerSection + (normalSectionIndex < remainder ? 1 : 0);
+                normalSectionIndex++;
+            }
+            
+            for(let i=0; i < countForThisSection; i++) {
+                if(photoCounter <= totalPolaroids) {
+                    const filename = `photo${photoCounter}.jpg`;
+                    grid.appendChild(createPolaroid(filename, photoCounter));
+                    photoCounter++;
+                }
+            }
+            
+            section.appendChild(grid);
+            container.appendChild(section);
+        });
+
+        function createPolaroid(filename, index) {
+            const div = document.createElement('div');
+            div.className = 'polaroid';
+            const rot = (Math.random() * 8 - 4).toFixed(2);
+            div.style.setProperty('--rot', `${rot}deg`);
+
+            const box = document.createElement('div');
+            box.className = 'polaroid-img-box';
+
+            const path = `media/${filename}`;
+            const img = document.createElement('img');
+            img.src = path;
+            img.alt = `Memory ${index}`;
+            img.loading = "lazy";
+            
+            img.onerror = () => {
+                img.style.display = 'none';
+                box.innerHTML = `<div style="height:100%; display:flex; align-items:center; justify-content:center; font-size:9px; opacity:0.3; text-align:center; padding:10px;">Memori #${index}</div>`;
+            };
+            
+            box.appendChild(img);
+            div.appendChild(box);
+            div.onclick = () => openModal(path);
+            return div;
+        }
+
+        function openModal(src) {
+            modalInner.innerHTML = '';
+            const content = document.createElement('img');
+            content.src = src;
+            content.id = 'modal-content';
+            modalInner.appendChild(content);
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        modalClose.onclick = () => {
+            modal.style.display = 'none';
+            modalInner.innerHTML = '';
+            document.body.style.overflow = 'auto';
+        };
+
+        modal.onclick = (e) => { if (e.target === modal) modalClose.onclick(); };
+    </script>
+</body>
+</html>
